@@ -29,7 +29,9 @@ export const signupGoogleApi = (googleIdToken) => {
       })
       .catch((err) => {
         console.log("Error Code:", err.response.data.Code);
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };
@@ -51,7 +53,9 @@ export const signupApi = (user) => {
       })
       .catch((err) => {
         console.log("Error Code:", err.response.data.Code);
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };
@@ -71,7 +75,9 @@ export const LoginApi = (user) => {
       })
       .catch((err) => {
         console.log("Error Code:", err.response.data.Code);
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };
@@ -89,8 +95,11 @@ export const LoginGoogleApi = (googleIdToken) => {
         resolve(res.data.user);
       })
       .catch((err) => {
+        console.log(err);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
         console.log("Error Code:", err.response.data.Code);
-        reject(err.response.data.Message);
       });
   });
 };
@@ -107,7 +116,9 @@ export const UpdateUserApi = (user, token) => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };
@@ -128,7 +139,9 @@ export const UpdateUserImageApi = (imagefile, token) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };
@@ -146,7 +159,9 @@ export const UpdateUserPasswordApi = (password, token) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };
@@ -162,7 +177,9 @@ export const SendPasswordMailApi = (email) => {
         resolve(res.data.Message);
       })
       .catch((err) => {
-        reject(err.response.data.Message);
+        err.response.data
+          ? reject(err.response.data.Message)
+          : reject("No connection");
       });
   });
 };

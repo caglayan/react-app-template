@@ -150,7 +150,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/react-app-template/"/>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
             <CssBaseline />

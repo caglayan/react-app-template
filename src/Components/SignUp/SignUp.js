@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignupDialogContent(props) {
+  const API_KEY = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const [progressVisible, setProgressVisible] = React.useState(false);
   const classes = useStyles();
   const history = useHistory();
@@ -79,7 +80,7 @@ function SignupDialogContent(props) {
           onRequest={(e) => {
             setProgressVisible(true);
           }}
-          clientId="152160269393-ko1pdpt8sr5gdqfnhvhbon3u7sh7qpe4.apps.googleusercontent.com"
+          clientId={API_KEY}
           buttonText="Sign Up with Google"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
