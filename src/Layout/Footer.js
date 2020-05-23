@@ -3,7 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
-import blueGrey from "@material-ui/core/colors/blueGrey";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { Container } from "@material-ui/core";
+import Link from "@material-ui/core/Link";
+import logo from "../logo.svg";
 
 /*
 value         |0px     600px    960px    1280px   1920px
@@ -12,119 +15,86 @@ screen width  |--------|--------|--------|--------|-------->
 range         |   xs   |   sm   |   md   |   lg   |   xl
 */
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   MainGrid: {
     backgroundColor: "tarnsparent",
-    marginLeft: "40px"
   },
   Footer: {
-    backgroundColor: blueGrey[900]
-  }
+    backgroundColor: "#eff1fe",
+  },
+  logo: {
+    width: "30%",
+  },
+  inlineIcon: {
+    verticalAlign: "bottom",
+  },
+  mailTypograpgh: {
+    marginTop: "",
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "40px",
+    },
+  },
+  grow: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+  },
 }));
 
 export default function Footer(props) {
   const classes = useStyles();
   return (
     <div className={classes.Footer}>
-      <Grid
-        className={classes.MainGrid}
-        container
-        direction="row"
-        alignItems="flex-start"
-        justify="flex-start"
-        style={{padding:"20px"}}
-      >
-        <Grid
-          container
-          item
-          xs={2}
-          direction="column"
-          justify="flex-start"
-          spacing={0}
-        >
-          <Grid item>
-            <Typography variant="h6">Miuul</Typography>
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item sm={4}>
+            <img
+              style={{ marginTop: "20px" }}
+              src={logo}
+              className={classes.logo}
+              alt="logo"
+            />
+            <Typography
+              style={{ marginTop: "20px" }}
+              variant="body1"
+              gutterBottom
+            >
+              Hi! We are the energetic and passinoate team creates next
+              generation AI based text tools.
+            </Typography>
           </Grid>
-          <Grid item>
-            <Typography variant="caption">Hakkımızda</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption">Kariyer</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption">Blog</Typography>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          xs={2}
-          direction="column"
-          justify="flex-start"
-          spacing={0}
-        >
-          <Grid item>
-            <Typography variant="h6">Topluluk</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption">Yazar Ol</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption">Üniversiteler</Typography>
+          <Grid item sm={4} className={classes.grow} />
+          <Grid item sm={4}>
+            <Typography
+              className={classes.mailTypograpgh}
+              variant="body1"
+              gutterBottom
+            >
+              <Link href="mailto:hello@kiraz.io?subject=I have a message">
+                hello@kiraz.io
+              </Link>
+            </Typography>
+            <Typography
+              style={{ marginTop: "20px" }}
+              variant="body1"
+              gutterBottom
+            >
+              I{" "}
+              <FavoriteIcon className={classes.inlineIcon} color="secondary" />{" "}
+              Istanbul
+            </Typography>
           </Grid>
         </Grid>
-        <Grid
-          container
-          item
-          xs={2}
-          direction="column"
-          justify="flex-start"
-          spacing={0}
-        >
-          <Grid item>
-            <Typography variant="h6">Eğitmenlik</Typography>
+        <Grid container justify="center" spacing={2}>
+          <Grid item sm={12}>
+            <Divider></Divider>
           </Grid>
-          <Grid item>
-            <Typography variant="caption">Hakkımızda</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption">Kariyer</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption">Blog</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Divider style={{ marginTop: 30, marginBottom: 10 }} />
-      <Grid spacing={3} container direction="row" alignItems="center">
-        <Grid item xs={4}>
-          <Typography
-            style={{ marginLeft: "40px", height: "30px" }}
-            variant="body2"
-          >
-            Copyright © 2019 Miuul, Inc.
+          <Typography variant="body1" gutterBottom>
+            Copyright 2020 NinjaCoders All Rights Reserved.
           </Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Grid
-            spacing={3}
-            container
-            direction="row"
-            alignItems="center"
-            justify="center"
-          >
-            <Grid item>
-              <Typography variant="body2">Destek</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="body2">Gizlilik</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="body2">Koşullar</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+      </Container>
     </div>
   );
 }

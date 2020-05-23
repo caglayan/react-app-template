@@ -8,14 +8,15 @@ import {
   UpdateUserApi,
   UpdateUserImageApi,
   UpdateUserPasswordApi,
-  LoginGoogleApi
+  LoginGoogleApi,
 } from "../../Api/userApi";
+import jwtDecode from "jwt-decode";
 
 import { updateUser, removeUser } from "../Actions/userActions";
 
 export const startCreateUserGoogle = (profile) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       signupGoogleApi(profile)
         .then((user) => {
           dispatch(updateUser(user));
@@ -23,7 +24,6 @@ export const startCreateUserGoogle = (profile) => {
           resolve(user);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -32,7 +32,7 @@ export const startCreateUserGoogle = (profile) => {
 
 export const startCreateUserWebApi = (user) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       signupApi(user)
         .then((user) => {
           dispatch(updateUser(user));
@@ -40,7 +40,6 @@ export const startCreateUserWebApi = (user) => {
           resolve(user);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -49,7 +48,7 @@ export const startCreateUserWebApi = (user) => {
 
 export const startCreateUserLoginWebApi = (user) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       LoginApi(user)
         .then((user) => {
           console.log("basırılı");
@@ -58,8 +57,6 @@ export const startCreateUserLoginWebApi = (user) => {
           resolve(user);
         })
         .catch((err) => {
-          console.log("fail");
-          console.log(err);
           reject(err);
         });
     });
@@ -68,7 +65,7 @@ export const startCreateUserLoginWebApi = (user) => {
 
 export const startCreateUserLoginGoogle = (googleId) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       LoginGoogleApi(googleId)
         .then((user) => {
           console.log("basırılı");
@@ -88,6 +85,11 @@ export const startCreateUserLoginGoogle = (googleId) => {
 export const startCreateUserLocal = (dispatch) => {
   const user = userFetchLocal();
   if (user) {
+    var decodedToken = jwtDecode(user.token);
+    const now = new Date();
+    if (now.getTime() > decodedToken.exp * 1000) {
+      return null;
+    }
     dispatch(updateUser(user));
     return user;
   } else {
@@ -102,16 +104,14 @@ export const startRemoveUserLocal = (dispatch) => {
 
 export const updateUserWebApi = (user, token) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       UpdateUserApi(user, token)
-        .then((user) => {
-          console.log("basırılı");
-          dispatch(updateUser(user));
-          userSaveLocal(user);
-          resolve(user);
+        .then((response) => {
+          dispatch(updateUser(response.user));
+          userSaveLocal(response.user);
+          resolve(response.Message);
         })
         .catch((err) => {
-          console.log("fail");
           console.log(err);
           reject(err);
         });
@@ -121,7 +121,7 @@ export const updateUserWebApi = (user, token) => {
 
 export const updateUserImageWebApi = (image, token) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       UpdateUserImageApi(image, token)
         .then((user) => {
           console.log("basırılı");
@@ -140,16 +140,14 @@ export const updateUserImageWebApi = (image, token) => {
 
 export const updateUserPasswordWebApi = (password, token) => {
   return (dispatch) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       UpdateUserPasswordApi(password, token)
         .then((user) => {
-          console.log("basırılı");
           dispatch(updateUser(user));
           userSaveLocal(user);
           resolve(user);
         })
         .catch((err) => {
-          console.log("fail");
           console.log(err);
           reject(err);
         });

@@ -15,103 +15,99 @@ export const userRemoveLocal = (user) => {
   return ls.remove("user");
 };
 
-export const signupGoogleApi = (profile, token) => {
+export const signupGoogleApi = (googleIdToken) => {
   console.log("Signup Api");
-  const apiString = url + "/api/user/unauth/create";
+  const apiString = url + "/api/user/unauth/signupgoogle";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, {
-        email: profile.getEmail(),
-        givenName: profile.getGivenName(),
-        familyName: profile.getFamilyName(),
-        avatarImage: {
-          dataUri: profile.getImageUrl()
-        },
-        googleId: profile.getId()
+        googleIdToken,
       })
       .then((res) => {
         console.log(res.data.user);
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err);
+        console.log("Error Code:", err.response.data.Code);
+        reject(err.response.data.Message);
       });
   });
 };
 
 export const signupApi = (user) => {
   console.log("Signup Api");
-  const apiString = url + "/api/user/unauth/create";
+  const apiString = url + "/api/user/unauth/signup";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, {
         email: user.email,
         givenName: user.givenName,
         familyName: user.familyName,
-        password: user.password
+        password: user.password,
       })
       .then((res) => {
         console.log(res.data.user);
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err);
+        console.log("Error Code:", err.response.data.Code);
+        reject(err.response.data.Message);
       });
   });
 };
 
 export const LoginApi = (user) => {
   console.log("Login Api");
-  const apiString = url + "/api/user/unauth/auth";
+  const apiString = url + "/api/user/unauth/signin";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, {
         email: user.email,
-        password: user.password
+        password: user.password,
       })
       .then((res) => {
         console.log(res.data.user);
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err);
+        console.log("Error Code:", err.response.data.Code);
+        reject(err.response.data.Message);
       });
   });
 };
 
-export const LoginGoogleApi = (googleId) => {
+export const LoginGoogleApi = (googleIdToken) => {
   console.log("Login Api");
-  const apiString = url + "/api/user/unauth/authgoogle";
+  const apiString = url + "/api/user/unauth/signwithgoogle";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, {
-        googleId
+        googleIdToken,
       })
       .then((res) => {
         console.log(res.data.user);
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err);
+        console.log("Error Code:", err.response.data.Code);
+        reject(err.response.data.Message);
       });
   });
 };
 
 export const UpdateUserApi = (user, token) => {
-  console.log("Update Api");
-  console.log(user);
   const apiString = url + "/api/user/auth/update";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, user, {
-        headers: { "x-api-key": token }
+        headers: { "x-api-key": token },
       })
       .then((res) => {
-        console.log(res.data.user);
-        resolve(res.data.user);
+        console.log(res.data.Success);
+        resolve(res.data);
       })
       .catch((err) => {
-        reject(err);
+        reject(err.response.data.Message);
       });
   });
 };
@@ -125,32 +121,48 @@ export const UpdateUserImageApi = (imagefile, token) => {
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, formData, {
-        headers: { "x-api-key": token, "Content-Type": "multipart/form-data" }
+        headers: { "x-api-key": token, "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
         console.log(res.data.user);
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err);
+        reject(err.response.data.Message);
       });
   });
 };
 
 export const UpdateUserPasswordApi = (password, token) => {
   console.log("Update Password Api");
-  const apiString = url + "/api/user/unauth/updatePass";
+  const apiString = url + "/api/user/auth/updatepassword";
   return new Promise((resolve, reject) => {
     axios
       .post(apiString, password, {
-        headers: { "x-api-key": token }
+        headers: { "x-api-key": token },
       })
       .then((res) => {
         console.log(res.data.user);
         resolve(res.data.user);
       })
       .catch((err) => {
-        reject(err);
+        reject(err.response.data.Message);
+      });
+  });
+};
+
+export const SendPasswordMailApi = (email) => {
+  console.log("Update Password Api");
+  const apiString = url + "/api/user/unauth/resetpassword";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(apiString, email)
+      .then((res) => {
+        console.log(res.data.Message);
+        resolve(res.data.Message);
+      })
+      .catch((err) => {
+        reject(err.response.data.Message);
       });
   });
 };
