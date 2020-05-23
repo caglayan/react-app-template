@@ -28,10 +28,12 @@ export const signupGoogleApi = (googleIdToken) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        console.log("Error Code:", err.response.data.Code);
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -52,10 +54,12 @@ export const signupApi = (user) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        console.log("Error Code:", err.response.data.Code);
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -74,10 +78,12 @@ export const LoginApi = (user) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        console.log("Error Code:", err.response.data.Code);
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -95,11 +101,12 @@ export const LoginGoogleApi = (googleIdToken) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        console.log(err);
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
-        console.log("Error Code:", err.response.data.Code);
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -116,9 +123,12 @@ export const UpdateUserApi = (user, token) => {
         resolve(res.data);
       })
       .catch((err) => {
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -139,9 +149,12 @@ export const UpdateUserImageApi = (imagefile, token) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -159,9 +172,12 @@ export const UpdateUserPasswordApi = (password, token) => {
         resolve(res.data.user);
       })
       .catch((err) => {
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
@@ -177,9 +193,12 @@ export const SendPasswordMailApi = (email) => {
         resolve(res.data.Message);
       })
       .catch((err) => {
-        err.response.data
+        err.response
           ? reject(err.response.data.Message)
-          : reject("No connection");
+          : reject("No connection to our machines");
+        err.response
+          ? console.log("Error Code:", err.response.data.Code)
+          : console.log("No internet connection or database problem");
       });
   });
 };
