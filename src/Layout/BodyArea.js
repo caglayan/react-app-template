@@ -8,6 +8,7 @@ import SignUpPage from "./Pages/SignUpPage";
 import ResetPassPage from "./Pages/ResetPassPage";
 import CreatePassPage from "./Pages/CreatePassPage";
 import AccountPage from "../Account/Account";
+import CoursePage from "../Course/CourseMain";
 import { startCreateUserLocal } from "./../Redux/Selectors/userSelector";
 
 function BodyArea(propsGeneral) {
@@ -29,6 +30,12 @@ function BodyArea(propsGeneral) {
   return (
     <div className="container">
       <Switch>
+        <Route
+          path="/course/:id"
+          render={(props) => (
+            <CoursePage {...props} showMessages={propsGeneral.showMessages} />
+          )}
+        />
         <Route
           path="/user/"
           render={(props) =>
